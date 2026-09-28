@@ -1,0 +1,83 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --brand: #1b7f5a;
+    --ink: #12181f;
+    --bg: #ffffff;
+    --space: 1rem;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+    color: var(--ink);
+    font-size: 1rem;
+}
+
+h1, h2, h3 {
+    color: var(--brand);
+}
+
+main {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: var(--space);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+}
+
+nav a {
+    color: var(--brand);
+    margin-right: var(--space);
+}
+
+nav a:hover {
+    color: var(--ink);
+}
+
+a:focus, input:focus, select:focus, textarea:focus, button:focus {
+    outline: 3px solid var(--brand);
+}
+
+.project-card {
+    border-bottom: 1px solid var(--brand);
+}
+
+label {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+input[type="text"], input[type="email"], select, textarea {
+    width: 100%;
+    padding: 0.5rem;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    display: inline-block;
+}
+
+fieldset {
+    border: 2px solid var(--ink);
+    margin-top: var(--space);
+}
+
+legend {
+    font-weight: bold;
+}
+
+button {
+    background-color: var(--brand);
+    color: var(--bg);
+    padding: 0.5rem 1rem;
+    margin-top: var(--space);
+    font-size: 1rem;
+}
+
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+    display: inline;
+    margin-top: 0;
+}
