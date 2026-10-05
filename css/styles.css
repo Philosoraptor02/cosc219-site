@@ -14,35 +14,55 @@ body {
     line-height: 1.5;
     color: var(--ink);
     font-size: 1rem;
+    margin: 0;
+    padding: 0.5rem;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+figure {
+    margin: var(--space) 0;
 }
 
 h1, h2, h3 {
     color: var(--brand);
 }
 
-h1 {
-    font-size: 2rem;
-}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
 
-h2 {
-    font-size: 1.5rem;
-}
-
-h3 {
-    font-size: 1.25rem;
+header, main, footer {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: var(--space);
 }
 
 main {
-    max-width: 42rem;
-    margin: 0 auto;
-    padding: var(--space);
     border: 1px solid var(--ink);
     border-radius: 4px;
 }
 
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space);
+}
+
 nav a {
     color: var(--brand);
-    margin-right: var(--space);
 }
 
 nav a:hover {
@@ -53,8 +73,41 @@ a:focus, input:focus, select:focus, textarea:focus, button:focus {
     outline: 3px solid var(--brand);
 }
 
+.cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space);
+}
+
 .project-card {
-    border-bottom: 1px solid var(--brand);
+    border: 1px solid var(--brand);
+    padding: var(--space);
+    border-radius: 4px;
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space);
+}
+
+aside {
+    border: 1px solid var(--ink);
+    padding: var(--space);
+    border-radius: 4px;
+    align-self: start;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--space);
+}
+
+th, td {
+    border: 1px solid var(--ink);
+    padding: 0.25rem;
+    text-align: left;
 }
 
 label {
@@ -92,4 +145,26 @@ input[type="radio"] + label,
 input[type="checkbox"] + label {
     display: inline;
     margin-top: 0;
+}
+
+@media (min-width: 38rem) {
+    nav {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .two-col {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+/* Breakpoint 2: 58rem (928px) */
+@media (min-width: 58rem) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
