@@ -9,4 +9,11 @@ This week a dummy contact form was added, and some CSS styling
 
 I chose green for the text as it's my favourite colour. I wanted to set the font to IBM Plex (very hackery), but it would've required more tools then we've been shown so far, so I kept things simple.
 
+Breakpoints were chosen at 38rem and 58rem.
+Below 38rem two project cards become too cramped to comfortably read and the nav links would crowd the site title.
+At 58rem the container is wide enough to fit 3 projecct cards across the page without squishing the card text itno narrow strips.
+
+A flexbox was used for the nav bar because navigation is a one-dimensional row of items along a single axis where "justify-content: space-between" and "gap" cleanly separate the site branding from the links.
+A CSS grid was used for the cards and two-col layout because they require two-dimensional alignment, defined proportional column tracks, and automatic equal row heights across cards.
+
 No generative AI was used to write any of the HTML or CSS for this website
