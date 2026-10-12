@@ -183,3 +183,10 @@ function revealWord(word, guessedLetters) {
 function hasWon(word, guessedLetters) {
     return !revealWord(word, guessedLetters).includes("_");
 }
+// Nothing breaks if you swap them, the two lines are independent. Updating the player's lives doesn't
+// rely on the guessedLetters string, and updating the string doesn't rely on the life count.
+// The order doesn't matter, I even tried swapping lines of code to see if there would be a change and there wasn't one.
+
+// isValidGuess acts as a guard clause to catch invalid inputs and output a helpful warning message to
+// the user. If you didn't have that guard clause and ran normalizeGuess first, a bad input would get converted
+// to an empty string. The game's logic isn't meant to handle these, and it would cause a lot of problems.
