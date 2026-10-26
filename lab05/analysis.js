@@ -29,7 +29,10 @@
    ---------------------------------------------------------------------- */
 
 function revealWord(word, guessedLetters) {
-
+  return word
+        .split("")
+        .map(char => guessedLetters.includes(char) ? char : "_")
+        .join("");
 }
 
 
@@ -44,7 +47,9 @@ function revealWord(word, guessedLetters) {
    ---------------------------------------------------------------------- */
 
 function hasWon(word, guessedLetters) {
-
+  return word
+      .split("")
+      .every(char => guessedLetters.includes(char));
 }
 
 
@@ -59,7 +64,7 @@ function hasWon(word, guessedLetters) {
    ---------------------------------------------------------------------- */
 
 function trailNames(trails) {
-
+  return trails.map(t => t.name);
 }
 
 
@@ -69,7 +74,7 @@ function trailNames(trails) {
    ---------------------------------------------------------------------- */
 
 function openTrails(trails) {
-
+  return trails.filter(t => !t.closed);
 }
 
 
@@ -83,7 +88,7 @@ function openTrails(trails) {
    ---------------------------------------------------------------------- */
 
 function findByName(trails, name) {
-
+  return trails.find(t => t.name.toLowerCase() === name.toLowerCase());
 }
 
 
@@ -100,7 +105,7 @@ function findByName(trails, name) {
    ---------------------------------------------------------------------- */
 
 function sortedByDistance(trails) {
-
+  return [...trails].sort((a, b) => a.km - b.km);
 }
 
 
