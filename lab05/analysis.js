@@ -212,7 +212,7 @@ function openDistance(trails) {
 
 function summaryLines(trails) {
   return trails.map(t => 
-      `${t.name} — ${t.km} km, ${t.rating}${t.closed ? " (closed)" : ""}`
+      `${t.name} â€” ${t.km} km, ${t.rating}${t.closed ? " (closed)" : ""}`
    );
 }
 
