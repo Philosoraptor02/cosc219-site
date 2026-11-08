@@ -9,114 +9,133 @@
 
 export class Trail {
 
-  /* A truly private field. The # is part of the name; nothing outside this
-     class body can read or write it. Start it as false. */
-  // #closed = false;
+   /* A truly private field. The # is part of the name; nothing outside this
+      class body can read or write it. Start it as false. */
+   #closed = false;
 
-  /* A static property belongs to the CLASS, not to any instance.
-     Count how many Trails have been created. */
-  // static count = 0;
-
-
-  constructor(name, km, rating, gain) {
-    // store the four values on `this`, and increase Trail.count
-  }
+   /* A static property belongs to the CLASS, not to any instance.
+      Count how many Trails have been created. */
+   static count = 0;
 
 
-  /* get steepness â€” metres of climb per kilometre, rounded to a whole number.
+   constructor(name, km, rating, gain) {
+      // store the four values on `this`, and increase Trail.count
+      this.name = name;
+      this.km = km;
+      this.rating = rating;
+      this.gain = gain;
 
-       new Trail("Knox Mountain", 2.8, "moderate", 250).steepness  â†’  89
-
-     A getter is READ like a property: trail.steepness, with no ().
-     Use one when the value is worked out from the object rather than
-     stored on it.
-     ---------------------------------------------------------------- */
-  get steepness() {
-
-  }
+      Trail.count++;
+   }
 
 
-  /* get isClosed â€” read the private field.
-     This is how the outside world is allowed to see #closed. */
-  get isClosed() {
-
-  }
-
-
-  /* close() and open() â€” set the private field.
-     Return `this` from both, so calls can be chained:
-         trail.close().describe()
-     ---------------------------------------------------------------- */
-  close() {
-
-  }
-
-  open() {
-
-  }
+   /* get steepness â€” metres of climb per kilometre, rounded to a whole number.
+ 
+        new Trail("Knox Mountain", 2.8, "moderate", 250).steepness  â†’  89
+ 
+      A getter is READ like a property: trail.steepness, with no ().
+      Use one when the value is worked out from the object rather than
+      stored on it.
+      ---------------------------------------------------------------- */
+   get steepness() {
+      return Math.round(this.gain / this.km);
+   }
 
 
-  /* describe()  â†’  "Knox Mountain â€” 2.8 km, moderate"
-     Note the em dash and the comma. Use a template literal. */
-  describe() {
-
-  }
-
-
-  /* toJSON() â€” called automatically by JSON.stringify.
-
-     Return a plain object with name, km, rating, gain and closed.
-     Without this method, stringify sees only ordinary properties, so the
-     private field would silently vanish from the output.
-
-       JSON.parse(JSON.stringify(trail))
-         â†’  { name: "...", km: 2.8, rating: "...", gain: 250, closed: false }
-     ---------------------------------------------------------------- */
-  toJSON() {
-
-  }
+   /* get isClosed â€” read the private field.
+      This is how the outside world is allowed to see #closed. */
+   get isClosed() {
+      return this.#closed;
+   }
 
 
-  /* static fromObject(obj) â€” a factory.
+   /* close() and open() â€” set the private field.
+      Return `this` from both, so calls can be chained:
+          trail.close().describe()
+      ---------------------------------------------------------------- */
+   close() {
+      this.#closed = true;
+      return this;
+   }
 
-     Turn a plain object (say, one that came from JSON) into a real Trail.
-     Destructure the properties out, defaulting gain to 0 if it is missing.
+   open() {
+      this.#closed = false;
+      return this;
+   }
 
-       Trail.fromObject({ name: "Z", km: 3, rating: "easy" }).gain  â†’  0
-     ---------------------------------------------------------------- */
-  static fromObject(obj) {
 
-  }
+   /* describe()  â†’  "Knox Mountain â€” 2.8 km, moderate"
+      Note the em dash and the comma. Use a template literal. */
+   describe() {
+      return `${this.name} — ${this.km} km, ${this.rating}`;
+   }
+
+
+   /* toJSON() â€” called automatically by JSON.stringify.
+ 
+      Return a plain object with name, km, rating, gain and closed.
+      Without this method, stringify sees only ordinary properties, so the
+      private field would silently vanish from the output.
+ 
+        JSON.parse(JSON.stringify(trail))
+          â†’  { name: "...", km: 2.8, rating: "...", gain: 250, closed: false }
+      ---------------------------------------------------------------- */
+   toJSON() {
+      return {
+         name: this.name,
+         km: this.km,
+         rating: this.rating,
+         gain: this.gain,
+         closed: this.#closed
+      };
+   }
+
+
+   /* static fromObject(obj) â€” a factory.
+ 
+      Turn a plain object (say, one that came from JSON) into a real Trail.
+      Destructure the properties out, defaulting gain to 0 if it is missing.
+ 
+        Trail.fromObject({ name: "Z", km: 3, rating: "easy" }).gain  â†’  0
+      ---------------------------------------------------------------- */
+   static fromObject(obj) {
+      const { name, km, rating, gain = 0 } = obj;
+      return new Trail(name, km, rating, gain);
+   }
 }
 
 
 export class BikeTrail extends Trail {
 
-  /* Take the same four values plus a surface, defaulting to "gravel".
-
-     Call super(...) FIRST. It runs the parent constructor and creates
-     `this` â€” touch `this` before that line and you get a ReferenceError,
-     because the instance does not exist yet.
-     ---------------------------------------------------------------- */
-  constructor(name, km, rating, gain, surface) {
-
-  }
-
-
-  /* describe() â€” override the parent, and reuse it rather than repeating it.
-
-       "Myra Canyon â€” 12 km, easy â€” gravel"
-
-     super.describe() gives you the first part.
-     ---------------------------------------------------------------- */
-  describe() {
-
-  }
+   /* Take the same four values plus a surface, defaulting to "gravel".
+ 
+      Call super(...) FIRST. It runs the parent constructor and creates
+      `this` â€” touch `this` before that line and you get a ReferenceError,
+      because the instance does not exist yet.
+      ---------------------------------------------------------------- */
+   constructor(name, km, rating, gain, surface) {
+      super(name, km, rating, gain);
+      this.surface = surface;
+   }
 
 
-  /* toJSON() â€” everything the parent returns, plus surface.
-     Spread super.toJSON() rather than listing the fields again. */
-  toJSON() {
+   /* describe() â€” override the parent, and reuse it rather than repeating it.
+ 
+        "Myra Canyon â€” 12 km, easy â€” gravel"
+ 
+      super.describe() gives you the first part.
+      ---------------------------------------------------------------- */
+   describe() {
+      return `${super.describe()} — ${this.surface}`;
+   }
 
-  }
+
+   /* toJSON() â€” everything the parent returns, plus surface.
+      Spread super.toJSON() rather than listing the fields again. */
+   toJSON() {
+      return {
+         ...super.toJSON(),
+         surface: this.surface
+      };
+   }
 }
