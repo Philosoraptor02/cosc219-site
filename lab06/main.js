@@ -4,8 +4,8 @@
   so open index.html with Live Server.
 */
 
-// import TRAIL_DATA from ./data.js and TrailRegistry from ./registry.js
-
+import { TRAIL_DATA } from "./data.js";
+import { TrailRegistry } from "./registry.js";
 
 /* Build a registry from the data, close Bear Creek, then:
 
@@ -14,3 +14,16 @@
 
        6 trails, 5 open, 46.7 km total. Steepest: Pincushion Peak.
 */
+
+const registry = TrailRegistry.fromData(TRAIL_DATA);
+registry.find("Bear Creek").close();
+
+const trailsContainer = document.querySelector("#trails");
+const summaryContainer = document.querySelector("#summary");
+
+trailsContainer.innerHTML = registry.describeAll()
+  .map(desc => `<li>${desc}</li>`)
+  .join("");
+
+const { size, openTrails, totalDistance, steepest } = registry;
+summaryContainer.textContent = `${size} trails, ${openTrails.length} open, ${totalDistance} km total. Steepest: ${steepest.name}.`;
