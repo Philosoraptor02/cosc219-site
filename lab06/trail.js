@@ -67,7 +67,7 @@ export class Trail {
    /* describe()  â†’  "Knox Mountain â€” 2.8 km, moderate"
       Note the em dash and the comma. Use a template literal. */
    describe() {
-      return `${this.name} — ${this.km} km, ${this.rating}`;
+      return `${this.name} â€” ${this.km} km, ${this.rating}`;
    }
 
 
@@ -113,7 +113,7 @@ export class BikeTrail extends Trail {
       `this` â€” touch `this` before that line and you get a ReferenceError,
       because the instance does not exist yet.
       ---------------------------------------------------------------- */
-   constructor(name, km, rating, gain, surface) {
+   constructor(name, km, rating, gain, surface = "gravel") {
       super(name, km, rating, gain);
       this.surface = surface;
    }
@@ -126,7 +126,7 @@ export class BikeTrail extends Trail {
       super.describe() gives you the first part.
       ---------------------------------------------------------------- */
    describe() {
-      return `${super.describe()} — ${this.surface}`;
+      return `${super.describe()} â€” ${this.surface}`;
    }
 
 
