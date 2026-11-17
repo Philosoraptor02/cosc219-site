@@ -36,8 +36,12 @@ export function loadTrails() {
    const raw = localStorage.getItem(KEY);
 
    if (!raw) return [];
+
    try {
       const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) {
+         return [];
+      }
       return parsed;
    } catch (error) {
       return [];

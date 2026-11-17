@@ -42,7 +42,7 @@ function update() {
    When it is valid: clear #error, add the trail, reset the form. */
 
 form.addEventListener("submit", (event) => {
-   event.preventDefault(); // Stop the page from reloading!
+   event.preventDefault();
 
    const name = nameInput.value;
    const km = kmInput.value;
@@ -75,9 +75,9 @@ form.addEventListener("submit", (event) => {
 
 trailList.addEventListener("click", (event) => {
    const match = findAction(event.target);
-   if (!match) return; // Ignore clicks that aren't on buttons
+   if (!match) return;
 
-   errorMsg.textContent = ""; // Clear stale validation errors
+   errorMsg.textContent = "";
 
    if (match.action === "delete") {
       trails = removeTrail(trails, match.id);

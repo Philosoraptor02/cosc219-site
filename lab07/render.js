@@ -69,7 +69,6 @@ export function createTrailItem(trail) {
   deleteBtn.append(deleteLabel);
 
   li.append(nameSpan, kmSpan, toggleBtn, deleteBtn);
-
   return li;
 }
 
@@ -82,7 +81,6 @@ export function createTrailItem(trail) {
 
 export function renderTrails(trails, container) {
   const items = trails.map(t => createTrailItem(t));
-
   container.replaceChildren(...items);
 }
 
@@ -104,7 +102,6 @@ export function summaryText(trails) {
   const openCount = trails.filter(t => !t.closed).length;
   const totalKm = trails.reduce((sum, t) => sum + t.km, 0);
   const roundedKm = Math.round(totalKm * 10) / 10;
-
   const pluralTrail = trails.length === 1 ? "trail" : "trails";
 
   return `${trails.length} ${pluralTrail}, ${openCount} open, ${roundedKm} km total.`;
