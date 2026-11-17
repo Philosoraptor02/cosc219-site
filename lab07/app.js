@@ -5,15 +5,32 @@
 
 // import from ./storage.js, ./render.js and ./trails.js
 
+import { saveTrails, loadTrails, clearTrails } from "./storage.js";
+import { renderTrails, summaryText } from "./render.js";
+import { makeTrail, isValidTrail, addTrail, removeTrail, toggleTrail, findAction } from "./trails.js";
+
+const form = document.querySelector("#add-form");
+const nameInput = document.querySelector("#name");
+const kmInput = document.querySelector("#km");
+const errorMsg = document.querySelector("#error");
+const summary = document.querySelector("#summary");
+const trailList = document.querySelector("#trail-list");
+const clearBtn = document.querySelector("#clear");
 
 /* Load the saved trails into a `let` â€” the array is replaced, not edited,
    every time something changes. */
 
+let trails = loadTrails();
 
 /* update() â€” redraw the list, rewrite the summary, and save.
    Call it whenever the data changes, and once at the very bottom of this
    file so the page is not blank on load. */
 
+function update() {
+   renderTrails(trails, trailList);
+   summary.textContent = summaryText(trails);
+   saveTrails(trails);
+}
 
 /* The add form.
 
@@ -24,6 +41,25 @@
    field, and return without changing anything.
    When it is valid: clear #error, add the trail, reset the form. */
 
+form.addEventListener("submit", (event) => {
+   event.preventDefault(); // Stop the page from reloading!
+
+   const name = nameInput.value;
+   const km = kmInput.value;
+
+   if (!isValidTrail(name, km)) {
+      errorMsg.textContent = "Give the trail a name and a distance above zero.";
+      nameInput.focus();
+      return;
+   }
+
+   errorMsg.textContent = "";
+   const newTrail = makeTrail(name, km);
+   trails = addTrail(trails, newTrail);
+
+   form.reset();
+   update();
+});
 
 /* The list.
 
@@ -37,5 +73,27 @@
    have moved on from the form, and a stale validation message left on
    screen is just noise. */
 
+trailList.addEventListener("click", (event) => {
+   const match = findAction(event.target);
+   if (!match) return; // Ignore clicks that aren't on buttons
+
+   errorMsg.textContent = ""; // Clear stale validation errors
+
+   if (match.action === "delete") {
+      trails = removeTrail(trails, match.id);
+   } else if (match.action === "toggle") {
+      trails = toggleTrail(trails, match.id);
+   }
+
+   update();
+});
 
 /* The Clear all button: empty the array, clear storage, update. */
+
+clearBtn.addEventListener("click", () => {
+   trails = [];
+   clearTrails();
+   update();
+});
+
+update();
