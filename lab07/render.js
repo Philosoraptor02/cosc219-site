@@ -35,7 +35,42 @@
    ---------------------------------------------------------------------- */
 
 export function createTrailItem(trail) {
+  const li = document.createElement("li");
+  li.classList.add("trail");
+  li.dataset.id = trail.id;
 
+  if (trail.closed) {
+    li.classList.add("is-closed");
+  }
+
+  const nameSpan = document.createElement("span");
+  nameSpan.classList.add("trail-name");
+  nameSpan.textContent = trail.name;
+
+  const kmSpan = document.createElement("span");
+  kmSpan.classList.add("trail-km");
+  kmSpan.textContent = `${trail.km} km`;
+
+  const toggleBtn = document.createElement("button");
+  toggleBtn.type = "button";
+  toggleBtn.dataset.action = "toggle";
+  const toggleLabel = document.createElement("span");
+  toggleLabel.classList.add("btn-label");
+  toggleLabel.textContent = trail.closed ? "Reopen" : "Close";
+  toggleBtn.append(toggleLabel);
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.type = "button";
+  deleteBtn.dataset.action = "delete";
+  deleteBtn.setAttribute("aria-label", `Delete ${trail.name}`);
+  const deleteLabel = document.createElement("span");
+  deleteLabel.classList.add("btn-label");
+  deleteLabel.textContent = "Delete";
+  deleteBtn.append(deleteLabel);
+
+  li.append(nameSpan, kmSpan, toggleBtn, deleteBtn);
+
+  return li;
 }
 
 
@@ -46,7 +81,9 @@ export function createTrailItem(trail) {
    ---------------------------------------------------------------------- */
 
 export function renderTrails(trails, container) {
+  const items = trails.map(t => createTrailItem(t));
 
+  container.replaceChildren(...items);
 }
 
 
@@ -60,5 +97,15 @@ export function renderTrails(trails, container) {
    ---------------------------------------------------------------------- */
 
 export function summaryText(trails) {
+  if (trails.length === 0) {
+    return "No trails yet. Add one above.";
+  }
 
+  const openCount = trails.filter(t => !t.closed).length;
+  const totalKm = trails.reduce((sum, t) => sum + t.km, 0);
+  const roundedKm = Math.round(totalKm * 10) / 10;
+
+  const pluralTrail = trails.length === 1 ? "trail" : "trails";
+
+  return `${trails.length} ${pluralTrail}, ${openCount} open, ${roundedKm} km total.`;
 }
