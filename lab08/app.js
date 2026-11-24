@@ -14,44 +14,52 @@ const form = document.querySelector("#controls");
 
 
 export function matches(trail, search, rating) {
-  const bySearch = trail.name.toLowerCase().includes(search.toLowerCase());
-  const byRating = rating == "all" || trail.rating == rating;
-  return bySearch && byRating;
+    const bySearch = trail.name.toLowerCase().includes(search.toLowerCase());
+    const byRating = rating === "all" || trail.rating === rating;
+    return bySearch && byRating;
 }
 
 
 export function sortByDistance(trails) {
-  return trails.sort();
+    return [...trails].sort((a, b) => a.km - b.km);
 }
 
 
 export function render(trails) {
-  results.innerHTML = "";
+    results.textContent = "";
 
-  trails.forEach((trail) => {
-    const li = document.createElement("li");
-    li.className = "trail";
-    li.innerHTML =
-      '<span class="trail-name">' + trail.name + '</span>' +
-      '<span class="trail-km">' + trail.km + ' km</span>';
-    results.append(li);
-  });
+    trails.forEach((trail) => {
+        const li = document.createElement("li");
+        li.className = "trail";
 
-  count.textContent = trails.length + " trails";
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "trail-name";
+        nameSpan.textContent = trail.name;
+
+        const kmSpan = document.createElement("span");
+        kmSpan.className = "trail-km";
+        kmSpan.textContent = `${trail.km} km`;
+
+        li.append(nameSpan, kmSpan);
+        results.append(li);
+    });
+
+    count.textContent = trails.length + " trails";
 }
 
 
 function apply() {
-  const search = document.querySelector("#search").value;
-  const rating = document.querySelector("#rating").value;
+    const search = document.querySelector("#search").value;
+    const rating = document.querySelector("#rating").value;
 
-  const found = TRAILS.filter((t) => matches(t, search, rating));
-  render(sortByDistance(found));
+    const found = TRAILS.filter((t) => matches(t, search, rating));
+    render(sortByDistance(found));
 }
 
 
-form.addEventListener("submit", () => {
-  apply();
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    apply();
 });
 
 
